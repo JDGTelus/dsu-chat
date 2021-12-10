@@ -68,18 +68,33 @@
       const form = document.getElementById("form");
       const input = document.getElementById("input");
 
+      let userName = "";
+
+      const getUserName = () => userName;
+
+      const addToMessageList = ({ userName, message }) => {
+        const item = document.createElement("li");
+        item.innerHTML = `<b>${userName}:</b> ${message}`;
+        messages.appendChild(item);
+      };
+
       form.addEventListener("submit", (e) => {
         e.preventDefault();
-        if (input.value) {
-          socket.emit("chatMessageEvent", input.value);
+        const message = input.value;
+        if (message) {
+          socket.emit("chatMessageEvent", { userName: getUserName(), message });
+          addToMessageList({ userName: "Me", message });
           input.value = "";
         }
       });
 
-      socket.on("chatMessageEvent", (message) => {
-        const item = document.createElement("li");
-        item.textContent = message;
-        messages.appendChild(item);
+      socket.on("setDefaultUserName", (defaultName) => {
+        console.log(defaultName);
+        userName = defaultName;
+      });
+
+      socket.on("chatMessageEvent", ({ userName, message }) => {
+        addToMessageList({ userName, message });
         window.scrollTo(0, document.body.scrollHeight);
       });
     </script>
