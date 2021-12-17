@@ -1,15 +1,16 @@
 {
   "name": "dsu-chat",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "DSU Chat",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "TELUS",
+  "author": "JD",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "socket.io": "^4.4.0"
   }
