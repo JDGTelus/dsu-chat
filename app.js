@@ -3,15 +3,18 @@ const app = express();
 const server = require("http").createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 
 let connectionCount = 0;
 let connectedUsers = 0;
 
 const messages = [];
 
-// Static resources
+// Middlewares
 
 app.use(express.static("public"));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Templating engine setup
 
